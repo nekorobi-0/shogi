@@ -21,9 +21,9 @@ let canvas = {
      */
 
     drawing: function(sprite) {
+        if(sprite == null) return;
         //すでに描画されているならばスキップ
         if(sprite._drawed_flag)return;
-
         sprite._drawed_flag = true;
 
         //もし再描画が有効であればスプライトを再描画
@@ -31,36 +31,24 @@ let canvas = {
 
         //もし親スプライトが設定されていたら、親スプライトを描画して、その親スプライトの座標をもとに絶対座標を計算
         if(sprite.parent != null) {
-            this.drawing(sprite.parent);
+            canvas.drawing(sprite.parent);
             sprite.x = sprite.parent.x + sprite.relativeX;
             sprite.y = sprite.parent.x + sprite.relativeX;
-            sprite.rotation = sprite.parent.rotation + sprite.relativeRotation;
         }
 
-        //canvas1→貼り付け先
-
-        // canvas2を回転してcanvas1に描画
-        canvas.ctx.save();  // 現在の状態を保存
-
-        // canvas2の中央を基準に回転
-        canvas.ctx.translate(canvas.dom.width / 2, canvas.dom.height / 2);  // canvas1の中央に移動
-        canvas.ctx.rotate(sprite.rotate); 
-
-        // 回転後、canvas2をcanvas1に描画（中心を合わせる）
-        canvas.ctx.drawImage(sprite.offscreen, -sprite.offscreen.width / 2, -sprite.offscreen.height / 2);
-
-        canvas.ctx.restore();  // 状態を元に戻す
+        canvas.ctx.drawImage(sprite.offscreen, sprite.x, sprite.y,sprite.width,sprite.height);
 
 
     },
     frame: function(){
         //描画したかどうかを記録する変数を初期化
-        for(let i = 0;i < this.sprites.length;i++)
-            this.sprites_list[this.sprites[i]]._drawed_flag = false;
+        for(let i = 0;i < canvas.sprites.length;i++)
+            canvas.sprites_list[canvas.sprites[i]]._drawed_flag = false;
         
-        for(let i = 0;i < this.sprites.length;i++){
-            let _sprite = this.sprites[i];
+        for(let i = 0;i < canvas.sprites.length;i++){
+            let _sprite = canvas.sprites_list[canvas.sprites[i]];
+            canvas.drawing(_sprite);
         }
-        requestAnimationFrame(this.frame);
+        requestAnimationFrame(canvas.frame);
     }
 }

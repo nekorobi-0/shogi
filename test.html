@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <canvas></canvas>
+    <canvas width="1920" height="1440"></canvas>
 </body>
 <script src="sprite.js"></script>
 <script src="canvas.js"></script>
@@ -19,4 +19,14 @@
         background-color: whitesmoke;
     }
 </style>
+<script>
+    let test = new text();
+    test.text = "Hello, World!";
+    canvas.sprites_list['test'] = test;
+    canvas.sprites.push('test');
+    window.onload = function() {
+        console.log(canvas.sprites[0]);
+        canvas.frame();
+};
+</script>
 </html>

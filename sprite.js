@@ -2,11 +2,10 @@
  * スプライトの定義
  */
 class sprite {
-    width = 0;
-    height = 0;
+    width = 200;
+    height = 100;
     x = 0;
     y = 0;
-    rotation = 0;//弧度法
     //すでに描画されたかどうか
     _drawed_flag = false;
 
@@ -18,18 +17,18 @@ class sprite {
     parent = null;//親スプライト(代入すると上の絶対座標は、レンダリング時に決定されるようになる)
     relativeX = 0;//相対座標(X) parentがnullの時は無視される
     relativeY = 0;//相対座標(Y) 仕様はrelativeX同様。
-    relativeRotation = 0;
+
     //スプライト表示時にスプライトの画像を再生成するかどうか
-    rerendering_flag = false;
+    rerendering_flag = true;
 
     //画像を描いていくキャンバス
-    offscreen = new OffscreenCanvas(0,0);
+    offscreen = new OffscreenCanvas(1,1);
     ctx = this.offscreen.getContext("2d");
 
     //画像を生成する
     rendering(){
         this.offscreen = new OffscreenCanvas(this.width, this.height);
-        this.ctx = this.offscreen.getContext("2D");
+        this.ctx = this.offscreen.getContext("2d");
     }
     event = {
         click: function(){}
@@ -47,25 +46,25 @@ class text extends sprite {
     //親クラスにて指定された幅、高さにテキストの大きさが合うようにして描画
     rendering() {
         super.rendering();
-        ctx.save(); // 現在のコンテキスト状態を保存
+        this.ctx.save(); // 現在のコンテキスト状態を保存
 
         // スプライトサイズに合わせるスケールを計算
-        let textMetrics = ctx.measureText(text);
-        let scaleX = spriteWidth / textMetrics.width;
-        let scaleY = spriteHeight / (spriteHeight * 0.8);
+        let textMetrics = this.ctx.measureText(this.text);
+        let scaleX = this.width / textMetrics.width;
+        let scaleY = this.height / (this.fontSize);
     
         // スプライトの中心に合わせてスケール
-        ctx.translate(spriteWidth / 2, spriteHeight / 2);
-        ctx.scale(scaleX, scaleY);
-        ctx.translate(-spriteWidth / 2, -spriteHeight / 2);
+        this.ctx.translate(this.width / 2, this.height / 2);
+        this.ctx.scale(scaleX, scaleY);
+        this.ctx.translate(-this.width / 2, -this.height / 2);
     
         // テキストを描画
-        ctx.font = `${this.fontSize} ${this.fontFamily}`; // 基本の大きめフォント（スケールするので適当）
-        ctx.fillStyle = this.fontColor;
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-        ctx.fillText(text, spriteWidth / 2, spriteHeight / 2);
+        this.ctx.font = `${this.fontSize} ${this.fontFamily}`; // 基本の大きめフォント（スケールするので適当）
+        this.ctx.fillStyle = this.fontColor;
+        this.ctx.textAlign = "center";
+        this.ctx.textBaseline = "middle";
+        this.ctx.fillText(this.text, this.width / 2, this.height / 2);
     
-        ctx.restore(); // 変形をリセット
+        this.ctx.restore(); // 変形をリセット
     }
 }
