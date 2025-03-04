@@ -6,7 +6,19 @@ class sprite {
     height = 0;
     x = 0;
     y = 0;
+    rotation = 0;//弧度法
+    //すでに描画されたかどうか
+    _drawed_flag = false;
 
+    /**
+     * 相対座標
+     * parentにspriteが代入された時、レンダリング時に親要素の座標と、下にて設定する相対座標を元に上の絶対座標を
+     * 算出。
+     */
+    parent = null;//親スプライト(代入すると上の絶対座標は、レンダリング時に決定されるようになる)
+    relativeX = 0;//相対座標(X) parentがnullの時は無視される
+    relativeY = 0;//相対座標(Y) 仕様はrelativeX同様。
+    relativeRotation = 0;
     //スプライト表示時にスプライトの画像を再生成するかどうか
     rerendering_flag = false;
 
