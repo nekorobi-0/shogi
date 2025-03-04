@@ -6,7 +6,7 @@ class sprite {
     height = 0;
     x = 0;
     y = 0;
-    
+
     //スプライト表示時にスプライトの画像を再生成するかどうか
     rerendering_flag = false;
 
@@ -21,5 +21,39 @@ class sprite {
     }
     event = {
         click: function(){}
+    }
+}
+/**
+ * テキストを描画するスプライト
+ */
+class text extends sprite {
+    fontFamily = "Arial"; //フォントの定義はCSSで可能
+    fontSize = 12; //単位はpx
+    fontColor = "black";
+    text = "label"; //表示されるテキストである。初期値をlabelしたのは気分である。
+    
+    //親クラスにて指定された幅、高さにテキストの大きさが合うようにして描画
+    rendering() {
+        super.rendering();
+        ctx.save(); // 現在のコンテキスト状態を保存
+
+        // スプライトサイズに合わせるスケールを計算
+        let textMetrics = ctx.measureText(text);
+        let scaleX = spriteWidth / textMetrics.width;
+        let scaleY = spriteHeight / (spriteHeight * 0.8);
+    
+        // スプライトの中心に合わせてスケール
+        ctx.translate(spriteWidth / 2, spriteHeight / 2);
+        ctx.scale(scaleX, scaleY);
+        ctx.translate(-spriteWidth / 2, -spriteHeight / 2);
+    
+        // テキストを描画
+        ctx.font = `${this.fontSize} ${this.fontFamily}`; // 基本の大きめフォント（スケールするので適当）
+        ctx.fillStyle = this.fontColor;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(text, spriteWidth / 2, spriteHeight / 2);
+    
+        ctx.restore(); // 変形をリセット
     }
 }
