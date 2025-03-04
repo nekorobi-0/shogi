@@ -9,7 +9,7 @@
  */
 let canvas = {
     dom: document.getElementsByTagName("canvas")[0],
-    ctx: dom.getContext("2d"),
+    ctx: document.getElementsByTagName("canvas")[0].getContext("2d"),
     //sprites: 表示する順にidを配置する インデックスが小さい方が先に表示される。つまり背面に配置される。
     sprites: [],
     sprites_list: {},//スプライトとidを紐付け
