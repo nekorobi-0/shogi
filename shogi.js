@@ -32,6 +32,7 @@ class ShogiPiece {
         this.background.fontColor = "#DACA9E";
         this.background.rotate = this.rotate;
 
+
         this.background.x = x;
         this.background.y = y;
 
@@ -49,6 +50,8 @@ class ShogiPiece {
         this.background.group = this;
         this.letter.group = this;
 
+        this.background.hitbox = false
+        this.letter.hitbox = false
 
         this.id = id
     }
@@ -138,6 +141,7 @@ class ShogiManager {
         this.canvas = canvas;
         this.pieces = [];
         this.board = []
+        this.turn = true;
         for (let i = 0; i < 9; i++) {
             this.board.push([])
             for (let j = 0; j < 9; j++) {
@@ -177,6 +181,9 @@ class ShogiManager {
             return false;
         }
         let side = piece.side;
+        if (side  != this.turn){
+            return false;
+        }
         let dir = side ? 1 : -1;
         if (piece.canmove((y2-y)*dir,(x2-x)*dir)){
             if ((x2-x)^2+(y2-y)^2>=2){
@@ -201,6 +208,7 @@ class ShogiManager {
                     this.board[x2][y2].letter.text = SHOGIPIECECONVTABLE[this.board[x2][y2].id];
                 }
             }
+            this.turn = !this.turn;
             return true;
         }
         return false;
