@@ -81,6 +81,9 @@ let canvas = {
     add_sprite: function(sprite) {
         canvas.sprites.push(sprite);
     },
+    del_sprite: function(sprite) {
+        canvas.sprites.splice(canvas.sprites.indexOf(sprite),1);
+    },
     /**
      * x,yの一番上にスプライトを返す
      */

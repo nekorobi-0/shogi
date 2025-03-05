@@ -1,5 +1,5 @@
 const DEFAULTHALFSHOGIBOARD = [
-    [1,1,1,1,1,1,1,1,1],
+    [0,1,1,1,1,1,1,1,1],
     [0,2,0,0,0,0,0,3,0],
     [4,5,6,7,8,7,6,5,4]
 ]
@@ -16,55 +16,55 @@ const SHOGIPIECECONVTABLE = {
     11: "と",
     12: "馬",
     13: "竜",
-    14: "杏	",
+    14: "杏",
     15: "圭",
     16: "全"
 }
 class ShogiPiece {
     scale = 0.3;
     constructor(x, y, id,side=false) {
+        this.side = side;
         this.rotate = side?Math.PI:0;
-        this.backgtound = new text();
-        this.backgtound.text = "☗";
-        this.backgtound.width = Math.ceil(150*this.scale);
-        this.backgtound.height = Math.ceil(150*this.scale);
-        this.backgtound.fontColor = "#DACA9E";
-        this.backgtound.rotate = this.rotate;
+        this.background = new text();
+        this.background.text = "☗";
+        this.background.width = Math.ceil(150*this.scale);
+        this.background.height = Math.ceil(150*this.scale);
+        this.background.fontColor = "#DACA9E";
+        this.background.rotate = this.rotate;
 
-        this.backgtound.x = x;
-        this.backgtound.y = y;
+        this.background.x = x;
+        this.background.y = y;
 
         this.letter = new text();
         this.letter.text = SHOGIPIECECONVTABLE[id];
         this.letter.width = Math.ceil(80*this.scale);
         this.letter.height = Math.ceil(80*this.scale);
-        this.letter.parent = this.backgtound;
+        this.letter.parent = this.background;
 
         this.letter.relativeX = Math.ceil(35*this.scale);
         this.letter.relativeY = Math.ceil(35*this.scale);
         this.letter.fontColor = "#000000";
         this.letter.rotate = this.rotate;
 
-        this.backgtound.group = this;
+        this.background.group = this;
         this.letter.group = this;
 
 
         this.id = id
-        this.side = side;
     }
     push_canvas(canvas){
-        canvas.add_sprite(this.backgtound);
+        canvas.add_sprite(this.background);
         canvas.add_sprite(this.letter);
     }
 
     del_canvas(canvas){
-        canvas.del_sprite(this.backgtound);
+        canvas.del_sprite(this.background);
         canvas.del_sprite(this.letter);
     }
     canmove(x,y,id = null){
         switch(id==null?this.id:id){
             case 1:
-                if(x=1 && y==0){
+                if(x==0 && y==1){
                     return true;
                 }
                 break;
@@ -116,12 +116,12 @@ class ShogiPiece {
         return false;
     }
     set_pos(x,y){
-        this.backgtound.x = x;
-        this.backgtound.y = y;
+        this.background.x = x;
+        this.background.y = y;
         this.resetisdrawed();
     }
     resetisdrawed(){
-        this.backgtound._drawed_flag = false;
+        this.background._drawed_flag = false;
         this.letter._drawed_flag = false;
     }
 }
@@ -147,9 +147,8 @@ class ShogiManager {
                         this.board[i].push(new ShogiPiece(x,y,DEFAULTHALFSHOGIBOARD[i-6][j],false));
                         continue;
                     }
-                }else{
-                    this.board[i].push(null);
                 }
+                this.board[i].push(null);
             }
         }
     }
@@ -165,28 +164,37 @@ class ShogiManager {
             }
         }
     }
-    move(x,y,x2,y2){
+    move(x,y,x2,y2,naru=true){
         let piece = this.board[x][y];
         if (piece == null){
             return false;
         }
-        if (piece.canmove(x2-x,y2-y)){
+        let side = piece.side;
+        let dir = side ? 1 : -1;
+        if (piece.canmove((y2-y)*dir,(x2-x)*dir)){
             if ((x2-x)^2+(y2-y)^2>=2){
                 let max = Math.max(Math.abs(x2-x),Math.abs(y2-y));
-                for (let i = 0; i < max-1; i++) {
+                for (let i = 1; i < max; i++) {
                     if(this.board[x+Math.floor((x2-x)/max)*i][y+Math.floor((y2-y)/max)*i] != null){
                         return false;
                     }
                 }
             }
             if (this.board[x2][y2] != null){
-                this.inventory[side].push(this.board[x2][y2]);
+                this.board[x2][y2].del_canvas(this.canvas);
+                this.board[x2][y2].rotate+=Math.PI
+                this.inventory[!side].push(this.board[x2][y2]);
             }
             this.board[x2][y2] = piece;
             this.board[x][y] = null;
-            let pos = this.conv_to_pos(x,y);
+            let pos = this.conv_to_pos(x2,y2);
             piece.set_pos(pos[0],pos[1]);
-            this.reqire_rendering();
+            if (naru&&(side?(x<3):(x>5))){
+                if (this.board[x2][y2].id <=6){
+                    this.board[x2][y2].id += 10;
+                    this.board[x2][y2].letter.text = SHOGIPIECECONVTABLE[this.board[x2][y2].id];
+                }
+            }
             return true;
         }
         return false;
