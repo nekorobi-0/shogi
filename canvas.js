@@ -85,9 +85,9 @@ let canvas = {
      * x,yの一番上にスプライトを返す
      */
     getSpriteFromLocation(x,y){
-        for(let i = 0;i < this.hitbox.length;i++){
+        for(let i = 0;i < canvas.hitbox.length;i++){
             //x,yがスプライト内にあるかを判定
-            let _box = this.hitbox[i];
+            let _box = canvas.hitbox[i];
             if(
                 _box.x <= x && x <= _box.x + _box.width &&
                 _box.y <= y && y <= _box.y + _box.height                
