@@ -57,7 +57,8 @@ class Grid extends sprite {
     }
     rendering(){
         super.rendering();
-        this.ctx.fillStyle = "#000000";
+        this.ctx.save();
+        this.ctx.fillStyle = "#FF0000";
         this.ctx.lineWidth = 3;
         for(let i = 0;i < this.x_count;i++){
             this.drawline(i*this.width_per_grid,0,i*this.width_per_grid,this.height);
@@ -65,11 +66,13 @@ class Grid extends sprite {
         for(let i = 0;i < this.y_count;i++){
             this.drawline(0,i*this.height_per_grid,this.width,i*this.height_per_grid);
         }
+        this.ctx.restore();
     }
     drawline(x,y,x2,y2){
         this.ctx.beginPath();
-        this.ctx.moveTo(x,y);
-        this.ctx.lineTo(x2,y2);
+        this.ctx.moveTo(this.x+x,this.y+y);
+        this.ctx.lineTo(this.x+x2,this.y+y2);
+        this.ctx.closePath();
         this.ctx.stroke();
     }
     push_canvas(canvas){
