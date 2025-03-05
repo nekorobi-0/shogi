@@ -44,3 +44,34 @@ class ShogiHandler{
     }
     add_piece
 }
+
+class Grid extends sprite {
+    constructor(x,y,width,height,x_count,y_count){
+        super();
+        this.x = x;
+        this.y = y;
+        this.width = width*x_count;
+        this.height = height*y_count;
+    }
+    rendering(){
+        this.ctx.fillStyle = "#000000";
+        for(let i = 0;i < this.x_count;i++){
+            this.ctx.beginPath();
+            this.ctx.moveTo(i*this.width,0);
+            this.ctx.lineTo(i*this.width,this.y_count*this.height);
+            this.ctx.stroke();
+        }
+        for(let i = 0;i < this.y_count;i++){
+            this.ctx.beginPath();
+            this.ctx.moveTo(0,i*this.height);
+            this.ctx.lineTo(this.x_count*this.width,i*this.height);
+            this.ctx.stroke();
+        }
+    }
+    drawline(x,y,x2,y2){
+        this.ctx.beginPath();
+        this.ctx.moveTo(x,y);
+        this.ctx.lineTo(x2,y2);
+        this.ctx.stroke();
+    }
+}
