@@ -9,6 +9,9 @@ class sprite {
     //すでに描画されたかどうか
     _drawed_flag = false;
 
+    //当たり判定の有無
+    hitbox = true;
+
     /**
      * 相対座標
      * parentにspriteが代入された時、レンダリング時に親要素の座標と、下にて設定する相対座標を元に上の絶対座標を
