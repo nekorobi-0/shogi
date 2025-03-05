@@ -28,6 +28,11 @@ class sprite {
     offscreen = new OffscreenCanvas(1,1);
     ctx = this.offscreen.getContext("2d");
 
+    //イベントハンドラに渡される値を編集する関数   呼び出し元: イベントハンドラを管理する関数
+    eventData(event){
+        return event;
+    }
+
     //画像を生成する
     rendering(){
         this.offscreen = new OffscreenCanvas(this.width, this.height);
