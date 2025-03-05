@@ -57,5 +57,8 @@ let canvas = {
             canvas.drawing(_sprite);
         }
         requestAnimationFrame(canvas.frame);
+    },
+    add_sprite: function(sprite) {
+        canvas.sprites.push(sprite);
     }
 }

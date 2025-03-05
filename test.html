@@ -18,7 +18,7 @@
     }
 </style>
 <script>
-    let test = new text();
+    /*let test = new text();
     test.text = "☗";
     canvas.sprites.push(test);
     test.width = 150;
@@ -34,7 +34,9 @@
     
     test2.relativeX = 35;
     test2.relativeY = 35;
-    test2.fontColor = "black";
+    test2.fontColor = "black";*/
+    test = new ShogiPiece(0,0,"歩")
+    test.push_canvas(canvas);
     window.onload = function() {
         console.log(canvas.sprites[0]);
         canvas.frame();

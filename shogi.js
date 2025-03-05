@@ -6,6 +6,9 @@ class ShogiPiece {
         this.backgtound.height = 150
         this.backgtound.fontColor = "#DACA9E";
 
+        this.backgtound.x = x;
+        this.backgtound.y = y;
+
         this.letter = new text();
         this.letter.text = type;
         this.letter.width = 80
@@ -16,11 +19,12 @@ class ShogiPiece {
         this.letter.relativeY = 35;
         this.letter.fontColor = "#000000";
 
-        this.text.text = type;
-        this.text
+        this.letter.text = type;
+
         this.piece = type;
     }
     push_canvas(canvas){
-        canvas.sprites.push(crypto.randomUUID())
+        canvas.add_sprite(this.backgtound);
+        canvas.add_sprite(this.letter);
     }
 }
