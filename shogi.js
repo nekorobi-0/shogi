@@ -115,6 +115,15 @@ class ShogiPiece {
         }
         return false;
     }
+    set_pos(x,y){
+        this.backgtound.x = x;
+        this.backgtound.y = y;
+        this.resetisdrawed();
+    }
+    resetisdrawed(){
+        this.backgtound._drawed_flag = false;
+        this.letter._drawed_flag = false;
+    }
 }
 class ShogiManager {
     constructor(canvas){
@@ -158,7 +167,6 @@ class ShogiManager {
     }
     move(x,y,x2,y2){
         let piece = this.board[x][y];
-        let side = piece.side;
         if (piece == null){
             return false;
         }
@@ -176,12 +184,15 @@ class ShogiManager {
             }
             this.board[x2][y2] = piece;
             this.board[x][y] = null;
+            let pos = this.conv_to_pos(x,y);
+            piece.set_pos(pos[0],pos[1]);
+            this.reqire_rendering();
             return true;
         }
         return false;
     }
     reqire_rendering(){
-        
+        this.canvas.frame()
     }
 }
 
