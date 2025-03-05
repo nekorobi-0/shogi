@@ -61,6 +61,60 @@ class ShogiPiece {
         canvas.del_sprite(this.backgtound);
         canvas.del_sprite(this.letter);
     }
+    canmove(x,y,id = null){
+        switch(id==null?this.id:id){
+            case 1:
+                if(x=1 && y==0){
+                    return true;
+                }
+                break;
+            case 2:
+                if (Math.abs(x) == Math.abs(y)&&x!=0) {
+                    return true;
+                }
+                break;
+            case 3:
+                if ((x!=0||y!=0)&&x*y!=0) {
+                    return true;
+                }
+                break;
+            case 4:
+                if (x==0&&y>0) {
+                    return true;
+                }
+                break;
+            case 5:
+                if (Math.abs(x)==1&&y==2) {
+                    return true;
+                }
+                break;
+            case 6:
+                if ((Math.abs(x)==Math.abs(y)&&Math.abs(y)==1)||(x==1&&y==1)) {
+                    return true;
+                }
+                break;
+            case 7:
+            case 11:
+            case 14:
+            case 15:
+            case 16:
+                if ((x*y==0&&Math.abs(x)+Math.abs(y)>0)|| Math.abs(x)*y==1){
+                    return true;
+                }
+                break;
+            case 8:
+            case 9:
+                if (x^2+y^2<=2) {
+                    return true;
+                }
+                break;
+            case 12:
+                return this.canmove(x,y,7)||this.canmove(x,y,2);
+            case 13:
+                return this.canmove(x,y,7)||this.canmove(x,y,3);
+        }
+        return false;
+    }
 }
 class ShogiManager {
     constructor(canvas){
