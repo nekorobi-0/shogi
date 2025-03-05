@@ -35,6 +35,7 @@ class ShogiPiece {
 
         this.background.x = x;
         this.background.y = y;
+        this.background.hitbox = false;
 
         this.letter = new text();
         this.letter.text = SHOGIPIECECONVTABLE[id];
@@ -50,8 +51,7 @@ class ShogiPiece {
         this.background.group = this;
         this.letter.group = this;
 
-        this.background.hitbox = false
-        this.letter.hitbox = false
+        this.letter.hitbox = false;
 
         this.id = id
     }
