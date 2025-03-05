@@ -22,12 +22,14 @@ SHOGIPIECECONVTABLE = {
 }
 class ShogiPiece {
     scale = 0.3;
-    constructor(x, y, id) {
+    constructor(x, y, id,side=false) {
+        this.rotate = side?Math.PI:0;
         this.backgtound = new text();
         this.backgtound.text = "☗";
         this.backgtound.width = Math.ceil(150*this.scale);
         this.backgtound.height = Math.ceil(150*this.scale);
         this.backgtound.fontColor = "#DACA9E";
+        this.backgtound.rotate = this.rotate;
 
         this.backgtound.x = x;
         this.backgtound.y = y;
@@ -41,12 +43,14 @@ class ShogiPiece {
         this.letter.relativeX = Math.ceil(35*this.scale);
         this.letter.relativeY = Math.ceil(35*this.scale);
         this.letter.fontColor = "#000000";
+        this.letter.rotate = this.rotate;
 
         this.backgtound.group = this;
         this.letter.group = this;
 
 
         this.id = id
+        this.side = side;
     }
     push_canvas(canvas){
         canvas.add_sprite(this.backgtound);
