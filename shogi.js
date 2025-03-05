@@ -118,6 +118,7 @@ class ShogiPiece {
 }
 class ShogiManager {
     constructor(canvas){
+        this.inventory = {false: [], true: []};
         this.canvas = canvas;
         this.pieces = [];
         this.board = []
@@ -154,6 +155,33 @@ class ShogiManager {
                 }
             }
         }
+    }
+    move(x,y,x2,y2){
+        let piece = this.board[x][y];
+        let side = piece.side;
+        if (piece == null){
+            return false;
+        }
+        if (piece.canmove(x2-x,y2-y)){
+            if ((x2-x)^2+(y2-y)^2>=2){
+                let max = Math.max(Math.abs(x2-x),Math.abs(y2-y));
+                for (let i = 0; i < max-1; i++) {
+                    if(this.board[x+Math.floor((x2-x)/max)*i][y+Math.floor((y2-y)/max)*i] != null){
+                        return false;
+                    }
+                }
+            }
+            if (this.board[x2][y2] != null){
+                this.inventory[side].push(this.board[x2][y2]);
+            }
+            this.board[x2][y2] = piece;
+            this.board[x][y] = null;
+            return true;
+        }
+        return false;
+    }
+    reqire_rendering(){
+        
     }
 }
 
