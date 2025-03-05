@@ -48,7 +48,7 @@ let canvas = {
 
     },
     frame: function(){
-        canvas.ctx.clearRect(0,0,1920,1440);
+        canvas.ctx.clearRect(0,0,canvas.width,canvas.height);
         //描画したかどうかを記録する変数を初期化
         for(let i = 0;i < canvas.sprites.length;i++)
             canvas.sprites_list[canvas.sprites[i]]._drawed_flag = false;
