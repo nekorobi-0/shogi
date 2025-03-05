@@ -101,5 +101,13 @@ let canvas = {
 
 //クリックイベント処理
 canvas.dom.addEventListener('click',function(e){
+    // キャンバスの位置を取得
+    const rect = canvas.dom.getBoundingClientRect();
 
+    // クリックされた位置の相対座標を計算
+    const x = e.clientX - rect.left;  // キャンバスの左端からの距離
+    const y = e.clientY - rect.top;   // キャンバスの上端からの距離
+
+    let sprite = getSpriteFromLocation(x,y);
+    sprite.event.click();
 })
