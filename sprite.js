@@ -77,6 +77,7 @@ class new_grid extends sprite {
     height_per_grid;
     x_count;
     y_count;
+    backgroundColor = "rgb(255, 241, 117)";
     constructor(x,y,width_per_grid,height_per_grid,x_count,y_count){
         super();
         this.width = x_count * width_per_grid;
@@ -94,6 +95,9 @@ class new_grid extends sprite {
         this.height = this.height_per_grid * this.y_count;
         
         super.rendering();
+
+        this.ctx.fillStyle = this.backgroundColor;
+        this.ctx.fillRect(0,0,this.width,this.height);
         
         for(let i = 0;i <= this.x_count;i++){
             this.drawline(i*this.width_per_grid,0,i*this.width_per_grid,this.height);

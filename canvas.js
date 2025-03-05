@@ -62,7 +62,7 @@ let canvas = {
 
     },
     frame: function(){
-        //canvas.ctx.clearRect(0,0,canvas.dom.width,canvas.dom.height);
+        canvas.ctx.clearRect(0,0,canvas.dom.width,canvas.dom.height);
         //描画したかどうかを記録する変数を初期化
         for(let i = 0;i < canvas.sprites.length;i++)
             canvas.sprites[i]._drawed_flag = false;
