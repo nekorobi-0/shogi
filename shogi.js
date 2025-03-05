@@ -129,6 +129,8 @@ class ShogiPiece {
     reverce_side(){
         this.side = !this.side;
         this.rotate = this.rotate+Math.PI;
+        this.background.rotate = this.rotate;
+        this.letter.rotate = this.rotate;
         this.resetisdrawed();
     }
 }
@@ -209,7 +211,7 @@ class ShogiManager {
         this.canvas.frame()
     }
     get_inventorypos(side,index){
-        return [600+index*45,side?600:200]
+        return [600+index*45,side?250:100]
     }
     inventory_push(side,piece){
         this.inventory[side].push(piece);
@@ -217,13 +219,15 @@ class ShogiManager {
     }
     inventory_pop(side,index,x,y){
         if (this.inventory[side].length <= index){
-            return null;
+            return false;
         }
         let piece =  this.inventory[side][index];
-        if (this.board[x][y] != null){
+        if (this.board[x][y] == null){
             this.board[x][y] = piece;
             let pos = this.conv_to_pos(x,y);
             piece.set_pos(pos[0],pos[1]);
+        }else{
+            return false; 
         }
         this.inventory[side].splice(index,1);
         this.inventory_item_refresh(side);
