@@ -98,7 +98,7 @@ class ShogiPiece {
             case 14:
             case 15:
             case 16:
-                if ((x*y==0&&Math.abs(x)+Math.abs(y)>0)|| Math.abs(x)*y==1){
+                if ((x*y==0&&Math.abs(x)+Math.abs(y)<=1)|| Math.abs(x)*y==1){
                     return true;
                 }
                 break;
@@ -123,6 +123,11 @@ class ShogiPiece {
     resetisdrawed(){
         this.background._drawed_flag = false;
         this.letter._drawed_flag = false;
+    }
+    reverce_side(){
+        this.side = !this.side;
+        this.rotate = this.rotate+Math.PI;
+        this.resetisdrawed();
     }
 }
 class ShogiManager {
@@ -181,9 +186,8 @@ class ShogiManager {
                 }
             }
             if (this.board[x2][y2] != null){
-                this.board[x2][y2].del_canvas(this.canvas);
-                this.board[x2][y2].rotate+=Math.PI
-                this.inventory[!side].push(this.board[x2][y2]);
+                this.board[x2][y2].reverce_side();
+                this.inventory_push(!side,this.board[x2][y2]);
             }
             this.board[x2][y2] = piece;
             this.board[x][y] = null;
@@ -201,6 +205,32 @@ class ShogiManager {
     }
     reqire_rendering(){
         this.canvas.frame()
+    }
+    get_inventorypos(side,index){
+        return [600+index*45,side?600:200]
+    }
+    inventory_push(side,piece){
+        this.inventory[side].push(piece);
+        this.inventory_item_refresh(side);
+    }
+    inventory_pop(side,index,x,y){
+        if (this.inventory[side].length <= index){
+            return null;
+        }
+        let piece =  this.inventory[side][index];
+        if (this.board[x][y] != null){
+            this.board[x][y] = piece;
+            let pos = this.conv_to_pos(x,y);
+            piece.set_pos(pos[0],pos[1]);
+        }
+        this.inventory[side].splice(index,1);
+        this.inventory_item_refresh(side);
+    }
+    inventory_item_refresh(side){
+        for (let i = 0; i < this.inventory[side].length; i++) {
+            let pos = this.get_inventorypos(side,i);
+            this.inventory[side][i].set_pos(pos[0],pos[1]);
+        }
     }
 }
 
