@@ -74,7 +74,7 @@ let canvas = {
 
         //最後に描画されたスプライトが一番上に来るように、配列を反転させる
         canvas._hitbox.reverse();
-        canvas.hitbox = this._hitbox;
+        canvas.hitbox = canvas._hitbox;
         canvas._hitbox = [];
         requestAnimationFrame(canvas.frame);
     },
