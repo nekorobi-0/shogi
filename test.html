@@ -39,6 +39,9 @@
     test.push_canvas(canvas);
     test2 = new ShogiPiece(60,120,id=2,side = false)
     test2.push_canvas(canvas);*/
+    let stage = new new_grid(20,20,45,45,9,9);
+    canvas.sprites.push(stage);
+
     manager = new ShogiManager(canvas);
     manager.push_canvas();
     //なんか描画されない
