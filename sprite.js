@@ -71,3 +71,44 @@ class text extends sprite {
         this.ctx.restore(); // 変形をリセット
     }
 }
+class new_grid extends sprite {
+    width_per_grid;
+    height_per_grid;
+    x_count;
+    y_count;
+    constructor(x,y,width_per_grid,height_per_grid,x_count,y_count){
+        super();
+        this.width = x_count * width_per_grid;
+        this.height = y_count * height_per_grid;
+        this.x = x;
+        this.y = y;
+        this.width_per_grid = width_per_grid;
+        this.height_per_grid = height_per_grid;
+        this.x_count = x_count;
+        this.y_count = y_count;
+    }
+    
+    rendering(){
+        this.width = this.width_per_grid * this.x_count;
+        this.height = this.height_per_grid * this.y_count;
+        
+        super.rendering();
+        
+        for(let i = 0;i <= this.x_count;i++){
+            this.drawline(i*this.width_per_grid,0,i*this.width_per_grid,this.height);
+        }
+        for(let i = 0;i <= this.y_count;i++){
+            this.drawline(0,i*this.height_per_grid,this.width,i*this.height_per_grid);
+        }
+    }
+    //スプライト内の相対座標
+    drawline(x1,y1,x2,y2){
+        /* 描画 */
+        this.ctx.lineWidth = 1;
+        this.ctx.beginPath();
+        this.ctx.moveTo(x1, y1);
+        this.ctx.lineTo(x2, y2);
+        this.ctx.stroke();
+
+    }
+}
