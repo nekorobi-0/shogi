@@ -28,7 +28,6 @@ let canvas = {
     ctx: document.getElementsByTagName("canvas")[0].getContext("2d"),
     //sprites: 表示する順にidを配置する インデックスが小さい方が先に表示される。つまり背面に配置される。
     sprites: [],
-    sprites_list: {},//スプライトとidを紐付け
     addSpriteList: function(id, sprite) {
         
     },
@@ -66,14 +65,17 @@ let canvas = {
         canvas.ctx.clearRect(0,0,canvas.width,canvas.height);
         //描画したかどうかを記録する変数を初期化
         for(let i = 0;i < canvas.sprites.length;i++)
-            canvas.sprites_list[canvas.sprites[i]]._drawed_flag = false;
+            canvas.sprites[i]._drawed_flag = false;
         
         for(let i = 0;i < canvas.sprites.length;i++){
-            let _sprite = canvas.sprites_list[canvas.sprites[i]];
+            let _sprite = canvas.sprites[i];
             canvas.drawing(_sprite);
         }
         this.hitbox = this._hitbox;
         this._hitbox = [];
         requestAnimationFrame(canvas.frame);
+    },
+    add_sprite: function(sprite) {
+        canvas.sprites.push(sprite);
     }
 }

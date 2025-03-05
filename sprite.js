@@ -45,7 +45,7 @@ class text extends sprite {
     fontSize = 12; //単位はpx
     fontColor = "black";
     text = "label"; //表示されるテキストである。初期値をlabelしたのは気分である。
-    
+    group = null;
     //親クラスにて指定された幅、高さにテキストの大きさが合うようにして描画
     rendering() {
         super.rendering();

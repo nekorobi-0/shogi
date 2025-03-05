@@ -11,24 +11,22 @@
 </body>
 <script src="sprite.js"></script>
 <script src="canvas.js"></script>
-
+<script src="shogi.js"></script>
 <style>
     canvas {
         background-color: whitesmoke;
     }
 </style>
 <script>
-    let test = new text();
+    /*let test = new text();
     test.text = "☗";
-    canvas.sprites_list['test'] = test;
-    canvas.sprites.push('test');
+    canvas.sprites.push(test);
     test.width = 150;
     test.height = 150;
     test.fontColor = "#DACA9E";
     let test2 = new text();
     test2.text = "角";
-    canvas.sprites_list['test2'] = test2;
-    canvas.sprites.push('test2');
+    canvas.sprites.push(test2);
     test2.parent = test;
     test2.width = 80;
     test2.height = 80;
@@ -36,7 +34,9 @@
     
     test2.relativeX = 35;
     test2.relativeY = 35;
-    test2.fontColor = "black";
+    test2.fontColor = "black";*/
+    test = new ShogiPiece(0,0,"歩")
+    test.push_canvas(canvas);
     window.onload = function() {
         console.log(canvas.sprites[0]);
         canvas.frame();
