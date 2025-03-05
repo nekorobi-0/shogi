@@ -1,6 +1,28 @@
+DEFAULTHALFSHOGIBOARD = [
+    [1,1,1,1,1,1,1,1,1]
+    [0,2,0,0,0,0,0,3,0]
+    [4,5,6,7,8,7,6,5,4]
+]
+SHOGIBOARDCONVTABLE = {
+    1: "歩",
+    2: "角",
+    3:"飛",
+    4: "香",
+    5: "桂",
+    6: "銀",
+    7: "金",
+    8: "王",
+    9: "玉",
+    11: "と",
+    12: "馬",
+    13: "竜",
+    14: "杏	",
+    15: "圭",
+    16: "全"
+}
 class ShogiPiece {
     scale = 0.3;
-    constructor(x, y, type) {
+    constructor(x, y, id) {
         this.backgtound = new text();
         this.backgtound.text = "☗";
         this.backgtound.width = Math.ceil(150*this.scale);
@@ -11,7 +33,7 @@ class ShogiPiece {
         this.backgtound.y = y;
 
         this.letter = new text();
-        this.letter.text = type;
+        this.letter.text = SHOGIBOARDCONVTABLE[id];
         this.letter.width = Math.ceil(80*this.scale);
         this.letter.height = Math.ceil(80*this.scale);
         this.letter.parent = this.backgtound;
@@ -23,9 +45,8 @@ class ShogiPiece {
         this.backgtound.group = this;
         this.letter.group = this;
 
-        this.letter.text = type;
 
-        this.piece = type;
+        this.id = id
     }
     push_canvas(canvas){
         canvas.add_sprite(this.backgtound);
@@ -69,6 +90,10 @@ class Grid extends sprite {
         this.ctx.restore();
     }
     drawline(x,y,x2,y2){
+        this.ctx.rect(this.x+x,this.y+y,x2-x,y2-y);
+        this.ctx.stroke();
+
+        return;
         this.ctx.beginPath();
         this.ctx.moveTo(this.x+x,this.y+y);
         this.ctx.lineTo(this.x+x2,this.y+y2);
