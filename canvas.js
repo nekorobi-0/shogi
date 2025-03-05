@@ -73,9 +73,9 @@ let canvas = {
         }
 
         //最後に描画されたスプライトが一番上に来るように、配列を反転させる
-        this._hitbox.reverse();
-        this.hitbox = this._hitbox;
-        this._hitbox = [];
+        canvas._hitbox.reverse();
+        canvas.hitbox = this._hitbox;
+        canvas._hitbox = [];
         requestAnimationFrame(canvas.frame);
     },
     add_sprite: function(sprite) {
