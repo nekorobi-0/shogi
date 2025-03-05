@@ -94,7 +94,18 @@ class new_grid extends sprite {
         this.x_count = x_count;
         this.y_count = y_count;
     }
-    
+    convertToGridCoordinates(x,y){
+        x = x - this.x;
+        y = y - this.y;
+        return {x: Math.floor(x / this.width_per_grid),y: Math.floor(y / this.height_per_grid)};
+
+    }
+    eventData(event){
+        let grid = this.convertToGridCoordinates(event.pointX,event.pointY);
+        event.gridX = grid.x;
+        event.gridY = grid.y;
+        return event;
+    }
     rendering(){
         this.width = this.width_per_grid * this.x_count;
         this.height = this.height_per_grid * this.y_count;
