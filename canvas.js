@@ -3,6 +3,13 @@
  * スプライトの描画
  * スプライトの当たり判定
  */
+function update_canvas() {
+    let canvas = document.getElementsByTagName("canvas")[0]
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+update_canvas()
+window.addEventListener("resize", update_canvas);
 /**
  * 
  * 都合上、子スプライトが描画されると、親スプライトも描画されるようにする
