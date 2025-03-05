@@ -20,4 +20,7 @@ class ShogiPiece {
         this.text
         this.piece = type;
     }
+    push_canvas(canvas){
+        canvas.sprites.push(crypto.randomUUID())
+    }
 }
