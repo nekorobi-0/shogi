@@ -19,6 +19,9 @@ class ShogiPiece {
         this.letter.relativeY = 35;
         this.letter.fontColor = "#000000";
 
+        this.backgtound.group = this;
+        this.letter.group = this;
+
         this.letter.text = type;
 
         this.piece = type;
