@@ -46,11 +46,11 @@ class text extends sprite {
     fontColor = "black";
     text = "label"; //表示されるテキストである。初期値をlabelしたのは気分である。
     group = null;
+    rotate = 0;
     //親クラスにて指定された幅、高さにテキストの大きさが合うようにして描画
     rendering() {
         super.rendering();
         this.ctx.save(); // 現在のコンテキスト状態を保存
-
         // スプライトサイズに合わせるスケールを計算
         let textMetrics = this.ctx.measureText(this.text);
         let scaleX = this.width / textMetrics.width;
@@ -59,6 +59,7 @@ class text extends sprite {
         // スプライトの中心に合わせてスケール
         this.ctx.translate(this.width / 2, this.height / 2);
         this.ctx.scale(scaleX, scaleY);
+        this.ctx.rotate(this.rotate);
         this.ctx.translate(-this.width / 2, -this.height / 2);
     
         // テキストを描画

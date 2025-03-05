@@ -35,8 +35,10 @@
     test2.relativeX = 35;
     test2.relativeY = 35;
     test2.fontColor = "black";*/
-    test = new ShogiPiece(0,0,"歩")
+    test = new ShogiPiece(60,60,id=1,side = true)
     test.push_canvas(canvas);
+    test2 = new ShogiPiece(60,120,id=2,side = false)
+    test2.push_canvas(canvas);
     //なんか描画されない
     grid = new Grid(0,0,20,20,3,3);
     grid.push_canvas(canvas);

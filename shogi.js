@@ -1,17 +1,41 @@
+DEFAULTHALFSHOGIBOARD = [
+    [1,1,1,1,1,1,1,1,1]
+    [0,2,0,0,0,0,0,3,0]
+    [4,5,6,7,8,7,6,5,4]
+]
+SHOGIPIECECONVTABLE = {
+    1: "歩",
+    2: "角",
+    3:"飛",
+    4: "香",
+    5: "桂",
+    6: "銀",
+    7: "金",
+    8: "王",
+    9: "玉",
+    11: "と",
+    12: "馬",
+    13: "竜",
+    14: "杏	",
+    15: "圭",
+    16: "全"
+}
 class ShogiPiece {
     scale = 0.3;
-    constructor(x, y, type) {
+    constructor(x, y, id,side=false) {
+        this.rotate = side?Math.PI:0;
         this.backgtound = new text();
         this.backgtound.text = "☗";
         this.backgtound.width = Math.ceil(150*this.scale);
         this.backgtound.height = Math.ceil(150*this.scale);
         this.backgtound.fontColor = "#DACA9E";
+        this.backgtound.rotate = this.rotate;
 
         this.backgtound.x = x;
         this.backgtound.y = y;
 
         this.letter = new text();
-        this.letter.text = type;
+        this.letter.text = SHOGIPIECECONVTABLE[id];
         this.letter.width = Math.ceil(80*this.scale);
         this.letter.height = Math.ceil(80*this.scale);
         this.letter.parent = this.backgtound;
@@ -19,13 +43,14 @@ class ShogiPiece {
         this.letter.relativeX = Math.ceil(35*this.scale);
         this.letter.relativeY = Math.ceil(35*this.scale);
         this.letter.fontColor = "#000000";
+        this.letter.rotate = this.rotate;
 
         this.backgtound.group = this;
         this.letter.group = this;
 
-        this.letter.text = type;
 
-        this.piece = type;
+        this.id = id
+        this.side = side;
     }
     push_canvas(canvas){
         canvas.add_sprite(this.backgtound);
@@ -37,12 +62,43 @@ class ShogiPiece {
         canvas.del_sprite(this.letter);
     }
 }
-class ShogiHandler{
+class ShogiManager {
     constructor(canvas){
         this.canvas = canvas;
         this.pieces = [];
+        this.board = []
+        for (let i = 0; i < 9; i++) {
+            this.board.push([])
+            for (let j = 0; j < 9; j++) {
+                let x,y = this.conv_to_pos(i,j);
+                if (i < 3){
+                    if (DEFAULTHALFSHOGIBOARD[i][j] != 0){
+                        this.board[i].push(new ShogiPiece(x,y,DEFAULTHALFSHOGIBOARD[8-i][8-j],true));
+                        continue;
+                    }
+                }else if (i > 5){
+                    if (DEFAULTHALFSHOGIBOARD[i][j] != 0){
+                        this.board[i].push(new ShogiPiece(x,y,DEFAULTHALFSHOGIBOARD[i][j],false));
+                        continue;
+                    }
+                }else{
+                    this.board[i].push(null);
+                }
+            }
+        }
     }
-    add_piece
+    conv_to_pos(x,y){
+        return [x*30+20,y*30+20]
+    }
+    push_canvas(){
+        for (let i = 0; i < 9; i++) {
+            for (let j = 0; j < 9; j++) {
+                if (this.board[i][j] != null){
+                    this.board[i][j].push_canvas(this.canvas);
+                }
+            }
+        }
+    }
 }
 
 class Grid extends sprite {
@@ -69,6 +125,10 @@ class Grid extends sprite {
         this.ctx.restore();
     }
     drawline(x,y,x2,y2){
+        this.ctx.rect(this.x+x,this.y+y,x2-x,y2-y);
+        this.ctx.stroke();
+
+        return;
         this.ctx.beginPath();
         this.ctx.moveTo(this.x+x,this.y+y);
         this.ctx.lineTo(this.x+x2,this.y+y2);
