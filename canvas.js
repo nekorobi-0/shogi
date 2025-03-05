@@ -108,6 +108,6 @@ canvas.dom.addEventListener('click',function(e){
     const x = e.clientX - rect.left;  // キャンバスの左端からの距離
     const y = e.clientY - rect.top;   // キャンバスの上端からの距離
 
-    let sprite = getSpriteFromLocation(x,y);
+    let sprite = canvas.getSpriteFromLocation(x,y);
     sprite.event.click();
 })
