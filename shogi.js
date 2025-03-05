@@ -62,12 +62,43 @@ class ShogiPiece {
         canvas.del_sprite(this.letter);
     }
 }
-class ShogiHandler{
+class ShogiManager {
     constructor(canvas){
         this.canvas = canvas;
         this.pieces = [];
+        this.board = []
+        for (let i = 0; i < 9; i++) {
+            this.board.push([])
+            for (let j = 0; j < 9; j++) {
+                let x,y = this.conv_to_pos(i,j);
+                if (i < 3){
+                    if (DEFAULTHALFSHOGIBOARD[i][j] != 0){
+                        this.board[i].push(new ShogiPiece(x,y,DEFAULTHALFSHOGIBOARD[8-i][8-j],true));
+                        continue;
+                    }
+                }else if (i > 5){
+                    if (DEFAULTHALFSHOGIBOARD[i][j] != 0){
+                        this.board[i].push(new ShogiPiece(x,y,DEFAULTHALFSHOGIBOARD[i][j],false));
+                        continue;
+                    }
+                }else{
+                    this.board[i].push(null);
+                }
+            }
+        }
     }
-    add_piece
+    conv_to_pos(x,y){
+        return [x*30+20,y*30+20]
+    }
+    push_canvas(){
+        for (let i = 0; i < 9; i++) {
+            for (let j = 0; j < 9; j++) {
+                if (this.board[i][j] != null){
+                    this.board[i][j].push_canvas(this.canvas);
+                }
+            }
+        }
+    }
 }
 
 class Grid extends sprite {
