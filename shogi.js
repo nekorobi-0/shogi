@@ -1,9 +1,9 @@
-DEFAULTHALFSHOGIBOARD = [
-    [1,1,1,1,1,1,1,1,1]
-    [0,2,0,0,0,0,0,3,0]
+const DEFAULTHALFSHOGIBOARD = [
+    [1,1,1,1,1,1,1,1,1],
+    [0,2,0,0,0,0,0,3,0],
     [4,5,6,7,8,7,6,5,4]
 ]
-SHOGIPIECECONVTABLE = {
+const SHOGIPIECECONVTABLE = {
     1: "歩",
     2: "角",
     3:"飛",
@@ -70,15 +70,17 @@ class ShogiManager {
         for (let i = 0; i < 9; i++) {
             this.board.push([])
             for (let j = 0; j < 9; j++) {
-                let x,y = this.conv_to_pos(i,j);
+                let pos = this.conv_to_pos(i,j);
+                let x = pos[0];
+                let y = pos[1];
                 if (i < 3){
-                    if (DEFAULTHALFSHOGIBOARD[i][j] != 0){
-                        this.board[i].push(new ShogiPiece(x,y,DEFAULTHALFSHOGIBOARD[8-i][8-j],true));
+                    if (DEFAULTHALFSHOGIBOARD[2-i][8-j] != 0){
+                        this.board[i].push(new ShogiPiece(x,y,DEFAULTHALFSHOGIBOARD[2-i][8-j],true));
                         continue;
                     }
                 }else if (i > 5){
-                    if (DEFAULTHALFSHOGIBOARD[i][j] != 0){
-                        this.board[i].push(new ShogiPiece(x,y,DEFAULTHALFSHOGIBOARD[i][j],false));
+                    if (DEFAULTHALFSHOGIBOARD[i-6][j] != 0){
+                        this.board[i].push(new ShogiPiece(x,y,DEFAULTHALFSHOGIBOARD[i-6][j],false));
                         continue;
                     }
                 }else{
@@ -88,7 +90,7 @@ class ShogiManager {
         }
     }
     conv_to_pos(x,y){
-        return [x*30+20,y*30+20]
+        return [y*45+20,x*45+20]
     }
     push_canvas(){
         for (let i = 0; i < 9; i++) {
