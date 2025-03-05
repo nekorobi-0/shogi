@@ -62,7 +62,7 @@ let canvas = {
 
     },
     frame: function(){
-        //canvas.ctx.clearRect(0,0,canvas.dom.width,canvas.dom.height);
+        canvas.ctx.clearRect(0,0,canvas.dom.width,canvas.dom.height);
         //描画したかどうかを記録する変数を初期化
         for(let i = 0;i < canvas.sprites.length;i++)
             canvas.sprites[i]._drawed_flag = false;
@@ -74,7 +74,7 @@ let canvas = {
 
         //最後に描画されたスプライトが一番上に来るように、配列を反転させる
         canvas._hitbox.reverse();
-        canvas.hitbox = this._hitbox;
+        canvas.hitbox = canvas._hitbox;
         canvas._hitbox = [];
         requestAnimationFrame(canvas.frame);
     },
@@ -85,9 +85,9 @@ let canvas = {
      * x,yの一番上にスプライトを返す
      */
     getSpriteFromLocation(x,y){
-        for(let i = 0;i < this.hitbox.length;i++){
+        for(let i = 0;i < canvas.hitbox.length;i++){
             //x,yがスプライト内にあるかを判定
-            let _box = this.hitbox[i];
+            let _box = canvas.hitbox[i];
             if(
                 _box.x <= x && x <= _box.x + _box.width &&
                 _box.y <= y && y <= _box.y + _box.height                
@@ -101,5 +101,13 @@ let canvas = {
 
 //クリックイベント処理
 canvas.dom.addEventListener('click',function(e){
+    // キャンバスの位置を取得
+    const rect = canvas.dom.getBoundingClientRect();
 
+    // クリックされた位置の相対座標を計算
+    const x = e.clientX - rect.left;  // キャンバスの左端からの距離
+    const y = e.clientY - rect.top;   // キャンバスの上端からの距離
+
+    let sprite = canvas.getSpriteFromLocation(x,y);
+    sprite.event.click();
 })
