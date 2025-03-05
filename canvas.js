@@ -33,7 +33,7 @@ let canvas = {
         if(sprite.parent != null) {
             canvas.drawing(sprite.parent);
             sprite.x = sprite.parent.x + sprite.relativeX;
-            sprite.y = sprite.parent.x + sprite.relativeX;
+            sprite.y = sprite.parent.y + sprite.relativeX;
         }
 
         canvas.ctx.drawImage(sprite.offscreen, sprite.x, sprite.y,sprite.width,sprite.height);
@@ -41,6 +41,7 @@ let canvas = {
 
     },
     frame: function(){
+        canvas.ctx.clearRect(0,0,1920,1440);
         //描画したかどうかを記録する変数を初期化
         for(let i = 0;i < canvas.sprites.length;i++)
             canvas.sprites_list[canvas.sprites[i]]._drawed_flag = false;

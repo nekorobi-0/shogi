@@ -21,9 +21,24 @@
 </style>
 <script>
     let test = new text();
-    test.text = "Hello, World!";
+    test.text = "☗";
     canvas.sprites_list['test'] = test;
     canvas.sprites.push('test');
+    test.width = 150;
+    test.height = 150;
+    test.fontColor = "#DACA9E";
+    let test2 = new text();
+    test2.text = "角";
+    canvas.sprites_list['test2'] = test2;
+    canvas.sprites.push('test2');
+    test2.parent = test;
+    test2.width = 80;
+    test2.height = 80;
+    
+    
+    test2.relativeX = 35;
+    test2.relativeY = 35;
+    test2.fontColor = "black";
     window.onload = function() {
         console.log(canvas.sprites[0]);
         canvas.frame();
