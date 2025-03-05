@@ -37,8 +37,13 @@
     test2.fontColor = "black";*/
     test = new ShogiPiece(0,0,"歩")
     test.push_canvas(canvas);
+    //なんか描画されない
+    grid = new Grid(0,0,20,20,3,3);
+    grid.push_canvas(canvas);
     window.onload = function() {
         console.log(canvas.sprites[0]);
+        console.log(canvas.sprites[1]);
+        console.log(canvas.sprites[2]);
         canvas.frame();
 };
 </script>
