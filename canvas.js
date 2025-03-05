@@ -71,11 +71,35 @@ let canvas = {
             let _sprite = canvas.sprites[i];
             canvas.drawing(_sprite);
         }
+
+        //最後に描画されたスプライトが一番上に来るように、配列を反転させる
+        this._hitbox.reverse();
         this.hitbox = this._hitbox;
         this._hitbox = [];
         requestAnimationFrame(canvas.frame);
     },
     add_sprite: function(sprite) {
         canvas.sprites.push(sprite);
+    },
+    /**
+     * x,yの一番上にスプライトを返す
+     */
+    getSpriteFromLocation(x,y){
+        for(let i = 0;i < this.hitbox.length;i++){
+            //x,yがスプライト内にあるかを判定
+            let _box = this.hitbox[i];
+            if(
+                _box.x <= x && x <= _box.x + _box.width &&
+                _box.y <= y && y <= _box.y + _box.height                
+            ){
+                //枠内にあった
+                return  _box.sprite;
+            }
+        }
     }
 }
+
+//クリックイベント処理
+canvas.dom.addEventListener('click',function(e){
+
+})
