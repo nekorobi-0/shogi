@@ -3,7 +3,7 @@ DEFAULTHALFSHOGIBOARD = [
     [0,2,0,0,0,0,0,3,0]
     [4,5,6,7,8,7,6,5,4]
 ]
-SHOGIBOARDCONVTABLE = {
+SHOGIPIECECONVTABLE = {
     1: "歩",
     2: "角",
     3:"飛",
@@ -33,7 +33,7 @@ class ShogiPiece {
         this.backgtound.y = y;
 
         this.letter = new text();
-        this.letter.text = SHOGIBOARDCONVTABLE[id];
+        this.letter.text = SHOGIPIECECONVTABLE[id];
         this.letter.width = Math.ceil(80*this.scale);
         this.letter.height = Math.ceil(80*this.scale);
         this.letter.parent = this.backgtound;
